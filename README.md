@@ -4,7 +4,7 @@ This is an example project that demonstrates how to make a call to TheBrain's AP
 
 ## Setup
 
-1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/).
+1. This project uses **Node.js v18.x**. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/). When using [nvm](https://github.com/nvm-sh/nvm), you can simply run `nvm use` to switch to the version defined in `.nvmrc`.
 
 2. Clone this repository
 
