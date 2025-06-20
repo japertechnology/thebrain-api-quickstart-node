@@ -33,3 +33,6 @@ This is an example project that demonstrates how to make a call to TheBrain's AP
    ```
 
 You should now be able to access the app at [http://localhost:3000](http://localhost:3000).
+
+## Contributing
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on workflow, branch naming and commit format. Issue and pull request templates are available in the [`.github`](.github) directory.
