@@ -1,6 +1,6 @@
 export default async (req, res) => {
-
-  const { name, kind, label, typeId, sourceThoughtId, relation, acType } = req.body;
+  const { name, kind, label, typeId, sourceThoughtId, relation, acType } =
+    req.body;
   const { brainId } = req.query;
 
   const apiKey = process.env.API_KEY;
@@ -11,10 +11,11 @@ export default async (req, res) => {
   }
 
   try {
-    const response = await fetch(`https://api.bra.in/thoughts/${brainId}`, {
+    const apiUrl = process.env.BRAIN_API_URL || 'https://api.bra.in';
+    const response = await fetch(`${apiUrl}/thoughts/${brainId}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -24,7 +25,7 @@ export default async (req, res) => {
         typeId,
         sourceThoughtId,
         relation,
-        acType
+        acType,
       }),
     });
 
@@ -36,6 +37,8 @@ export default async (req, res) => {
     res.status(200).json(data);
   } catch (error) {
     console.error('Error: ', error.message);
-    res.status(500).json({ error: 'An error occurred while creating the thought.' });
+    res
+      .status(500)
+      .json({ error: 'An error occurred while creating the thought.' });
   }
 };
