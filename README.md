@@ -24,7 +24,7 @@ This is an example project that demonstrates how to make a call to TheBrain's AP
    ```bash
    $ cp .env.example .env.local
    ```
-6. Add your [API key](https://app.thebrain.com/apiKeys) to the newly created `.env.local` file
+6. Add your [API key](https://app.thebrain.com/apiKeys) to the newly created `.env.local` file. **This file contains secrets and should never be committed to version control.**
 
 7. Run the app
 
@@ -34,5 +34,12 @@ This is an example project that demonstrates how to make a call to TheBrain's AP
 
 You should now be able to access the app at [http://localhost:3000](http://localhost:3000).
 
+## Security best practices
+
+- `.env.local` is listed in `.gitignore`; keep it private and out of your repository.
+- Rotate your API keys periodically.
+- When deploying, use your hosting provider's environment manager to supply keys rather than committing them.
+
 ## Contributing
+
 We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on workflow, branch naming and commit format. Issue and pull request templates are available in the [`.github`](.github) directory.
