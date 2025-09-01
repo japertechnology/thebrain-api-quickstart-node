@@ -20,6 +20,42 @@ export default async (req, res) => {
     return;
   }
 
+  // Validate request body fields
+  if (typeof name !== 'string' || name.trim() === '') {
+    res.status(400).json({ error: 'Name is required and must be a non-empty string.' });
+    return;
+  }
+
+  if (!Number.isInteger(kind)) {
+    res.status(400).json({ error: 'Kind is required and must be an integer.' });
+    return;
+  }
+
+  if (!sourceThoughtId || !guidPattern.test(sourceThoughtId)) {
+    res.status(400).json({ error: 'Invalid sourceThoughtId format.' });
+    return;
+  }
+
+  if (!typeId || !guidPattern.test(typeId)) {
+    res.status(400).json({ error: 'Invalid typeId format.' });
+    return;
+  }
+
+  if (!Number.isInteger(relation)) {
+    res.status(400).json({ error: 'Relation is required and must be an integer.' });
+    return;
+  }
+
+  if (!Number.isInteger(acType)) {
+    res.status(400).json({ error: 'acType is required and must be an integer.' });
+    return;
+  }
+
+  if (label !== undefined && typeof label !== 'string') {
+    res.status(400).json({ error: 'Label must be a string if provided.' });
+    return;
+  }
+
   try {
     const response = await fetch(`https://api.bra.in/thoughts/${brainId}`, {
       method: 'POST',
