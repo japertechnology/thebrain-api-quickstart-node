@@ -39,11 +39,19 @@ export default async (req, res) => {
     });
 
     if (!response.ok) {
-      throw new Error('Request failed: ' + response.statusText);
+      const errorText = await response.text();
+      let message = errorText || response.statusText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        message = errorJson.message || errorJson.error || errorText;
+      } catch (_) {
+        // Response was not JSON; keep message as text
+      }
+      return res.status(response.status).json({ error: message });
     }
 
     const data = await response.json();
-    res.status(200).json(data);
+    return res.status(200).json(data);
   } catch (error) {
     console.error('Error: ', error.message);
     res.status(500).json({ error: 'An error occurred while creating the thought.' });
