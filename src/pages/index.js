@@ -59,13 +59,14 @@ export default function Home() {
         body: JSON.stringify(body),
       });
 
-      const data = await response.json();
+        const data = await response.json();
+        const newThoughtId = data.id;
 
-      if (response.ok) {
-        setSuccessMessage(`Success! New Thought ID: ${data}`);
-      } else {
-        setErrorMessage(data.error || 'An error occurred while creating the thought.');
-      }
+        if (response.ok) {
+          setSuccessMessage(`Success! New Thought ID: ${newThoughtId}`);
+        } else {
+          setErrorMessage(data.error || 'An error occurred while creating the thought.');
+        }
     } catch (error) {
       setErrorMessage('Error during fetch operation: ' + error.message);
     }
