@@ -28,7 +28,8 @@ export default async (req, res) => {
   const apiKey = process.env.API_KEY;
 
   if (!apiKey) {
-    res.status(401).json({ error: 'API Key missing or invalid.' });
+    console.error('API key not configured. Set API_KEY environment variable.');
+    res.status(500).json({ error: 'Server configuration error' });
     return;
   }
 
