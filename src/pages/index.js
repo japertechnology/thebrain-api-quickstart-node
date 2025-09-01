@@ -45,7 +45,7 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch(`/api/createThought?brainId=${brainId}`, {
+      const response = await fetch(`/api/createThought?brainId=${encodeURIComponent(brainId)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
