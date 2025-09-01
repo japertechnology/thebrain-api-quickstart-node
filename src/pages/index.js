@@ -70,6 +70,10 @@ export default function Home() {
         setErrorMessage(`Unexpected response format: ${text}`);
         return;
       }
+      if (!data || typeof data.id === 'undefined') {
+        setErrorMessage(`Missing id in server response: ${JSON.stringify(data)}`);
+        return;
+      }
 
       const newThoughtId = data.id;
 
