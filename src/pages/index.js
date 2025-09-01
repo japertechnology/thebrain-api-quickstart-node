@@ -53,14 +53,29 @@ export default function Home() {
         body: JSON.stringify(body),
       });
 
-        const data = await response.json();
-        const newThoughtId = data.id;
+      const contentType = response.headers.get('content-type');
+      let data;
 
-        if (response.ok) {
-          setSuccessMessage(`Success! New Thought ID: ${newThoughtId}`);
-        } else {
-          setErrorMessage(data.error || 'An error occurred while creating the thought.');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (err) {
+          setErrorMessage('Error parsing server response: ' + err.message);
+          return;
         }
+      } else {
+        const text = await response.text();
+        setErrorMessage(`Unexpected response format: ${text}`);
+        return;
+      }
+
+      const newThoughtId = data.id;
+
+      if (response.ok) {
+        setSuccessMessage(`Success! New Thought ID: ${newThoughtId}`);
+      } else {
+        setErrorMessage(data.error || 'An error occurred while creating the thought.');
+      }
     } catch (error) {
       setErrorMessage('Error during fetch operation: ' + error.message);
     }
