@@ -4,6 +4,18 @@ export default async (req, res) => {
     return;
   }
 
+  const serverToken = process.env.CSRF_TOKEN;
+  if (!serverToken) {
+    res.status(500).json({ error: 'CSRF token not configured.' });
+    return;
+  }
+
+  const csrfToken = req.headers['x-csrf-token'];
+  if (!csrfToken || csrfToken !== serverToken) {
+    res.status(403).json({ error: 'Invalid or missing CSRF token.' });
+    return;
+  }
+
   const { name, kind, label, typeId, sourceThoughtId, relation, acType } = req.body;
   const { brainId } = req.query;
   const guidPattern = /^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/;
