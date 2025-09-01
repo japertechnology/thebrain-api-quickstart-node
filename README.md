@@ -24,7 +24,7 @@ This is an example project that demonstrates how to make a call to TheBrain's AP
    ```bash
    $ cp .env.example .env.local
    ```
-6. Add your [API key](https://app.thebrain.com/apiKeys) to the newly created `.env.local` file
+6. Add your [API key](https://app.thebrain.com/apiKeys) and matching `CSRF_TOKEN`/`NEXT_PUBLIC_CSRF_TOKEN` values to the newly created `.env.local` file
 
 7. Run the app
 

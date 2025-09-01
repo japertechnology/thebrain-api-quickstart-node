@@ -8,6 +8,7 @@ export default function Home() {
   const [newThoughtLabel, setNewThoughtLabel] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const csrfToken = process.env.NEXT_PUBLIC_CSRF_TOKEN;
 
   const isGuid = (value) => {
     const guidPattern = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -49,6 +50,7 @@ export default function Home() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
         },
         body: JSON.stringify(body),
       });
