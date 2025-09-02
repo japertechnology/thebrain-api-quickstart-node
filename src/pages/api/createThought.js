@@ -99,6 +99,11 @@ export default async (req, res) => {
         acType
       }),
     });
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      const text = await response.text();
+      return res.status(502).json({ error: text || 'Invalid response from upstream server.' });
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -112,8 +117,13 @@ export default async (req, res) => {
       return res.status(response.status).json({ error: message });
     }
 
-    const data = await response.json();
-    return res.status(200).json(data);
+    try {
+      const data = await response.json();
+      return res.status(200).json(data);
+    } catch (_) {
+      const text = await response.text();
+      return res.status(502).json({ error: text || 'Invalid JSON response from upstream server.' });
+    }
   } catch (error) {
     console.error('Error: ', error.message);
     res.status(500).json({ error: 'An error occurred while creating the thought.' });
