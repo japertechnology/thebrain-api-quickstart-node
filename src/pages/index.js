@@ -85,18 +85,19 @@ export default function Home() {
         setErrorMessage(`Unexpected response format: ${text}`);
         return;
       }
+
+      if (!response.ok) {
+        setErrorMessage(data?.error || response.statusText);
+        return;
+      }
+
       if (!data || typeof data.id === 'undefined') {
         setErrorMessage(`Missing id in server response: ${JSON.stringify(data)}`);
         return;
       }
 
       const newThoughtId = data.id;
-
-      if (response.ok) {
-        setSuccessMessage(`Success! New Thought ID: ${newThoughtId}`);
-      } else {
-        setErrorMessage(data.error || 'An error occurred while creating the thought.');
-      }
+      setSuccessMessage(`Success! New Thought ID: ${newThoughtId}`);
     } catch (error) {
       setErrorMessage('Error during fetch operation: ' + error.message);
     }
