@@ -1,3 +1,5 @@
+import isGuid from '../../utils/isGuid';
+
 export default async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method Not Allowed' });
@@ -18,9 +20,8 @@ export default async (req, res) => {
 
   const { name, kind, label, typeId, sourceThoughtId, relation, acType } = req.body;
   const { brainId } = req.query;
-  const guidPattern = /^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/;
 
-  if (!brainId || !guidPattern.test(brainId)) {
+  if (!brainId || !isGuid(brainId)) {
     res.status(400).json({ error: 'Invalid brainId format.' });
     return;
   }
@@ -44,12 +45,12 @@ export default async (req, res) => {
     return;
   }
 
-  if (!sourceThoughtId || !guidPattern.test(sourceThoughtId)) {
+  if (!sourceThoughtId || !isGuid(sourceThoughtId)) {
     res.status(400).json({ error: 'Invalid sourceThoughtId format.' });
     return;
   }
 
-  if (!typeId || !guidPattern.test(typeId)) {
+  if (!typeId || !isGuid(typeId)) {
     res.status(400).json({ error: 'Invalid typeId format.' });
     return;
   }
