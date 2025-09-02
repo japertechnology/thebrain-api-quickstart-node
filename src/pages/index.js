@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import isGuid from '../utils/isGuid';
 
 export default function Home() {
   const [brainId, setBrainId] = useState('');
@@ -9,11 +10,6 @@ export default function Home() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const csrfToken = process.env.NEXT_PUBLIC_CSRF_TOKEN;
-
-  const isGuid = (value) => {
-    const guidPattern = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    return guidPattern.test(value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
