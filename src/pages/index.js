@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import isGuid from '../utils/isGuid';
 
@@ -18,7 +18,20 @@ export default function Home() {
   const [newThoughtLabel, setNewThoughtLabel] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const csrfToken = process.env.NEXT_PUBLIC_CSRF_TOKEN;
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const res = await fetch('/api/csrf');
+        const data = await res.json();
+        setCsrfToken(data.token);
+      } catch (err) {
+        setErrorMessage('Failed to fetch CSRF token: ' + err.message);
+      }
+    };
+    fetchToken();
+  }, []);
 
   /**
    * Handle submission of the create thought form.
