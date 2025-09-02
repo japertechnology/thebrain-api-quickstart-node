@@ -1,3 +1,10 @@
+/*
+  Global stylesheet for the application.
+
+  Tailwind CSS directives pull in base styles, component classes, and utility
+  classes that are used throughout the app. Custom variables and overrides are
+  defined below to align the visual design with TheBrain quickstart branding.
+*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
