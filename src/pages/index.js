@@ -60,12 +60,17 @@ export default function Home() {
       acType: 0
     };
 
+    if (!csrfToken) {
+      setErrorMessage('Missing CSRF token');
+      return;
+    }
+
     try {
       const response = await fetch(`/api/createThought?brainId=${encodeURIComponent(brainId)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-csrf-token': csrfToken,
+          ...(csrfToken ? { 'x-csrf-token': csrfToken } : {}),
         },
         body: JSON.stringify(body),
       });
