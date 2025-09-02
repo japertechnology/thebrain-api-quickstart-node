@@ -19,7 +19,9 @@ export default async (req, res) => {
   }
 
   const sessionToken = req.cookies?.csrfToken;
-  const csrfToken = req.headers['x-csrf-token'];
+  const csrfToken = Array.isArray(req.headers['x-csrf-token'])
+    ? req.headers['x-csrf-token'][0]
+    : req.headers['x-csrf-token'];
   if (!csrfToken || csrfToken !== sessionToken) {
     res.status(403).json({ error: 'Invalid or missing CSRF token.' });
     return;
