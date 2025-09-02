@@ -1,5 +1,17 @@
 import isGuid from '../../utils/isGuid';
 
+/**
+ * API route handler for creating a new thought within a brain.
+ *
+ * This endpoint validates incoming data, ensures that the request includes a
+ * valid CSRF token and properly formatted identifiers, and forwards the
+ * request to TheBrain API. It returns the created thought data or an error
+ * message in JSON format.
+ *
+ * @param {import('next').NextApiRequest} req - Incoming API request.
+ * @param {import('next').NextApiResponse} res - API response object.
+ * @returns {Promise<void>} Resolves once the response has been sent.
+ */
 export default async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method Not Allowed' });

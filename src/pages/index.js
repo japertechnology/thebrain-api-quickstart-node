@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import isGuid from '../utils/isGuid';
 
+/**
+ * Home page providing a form to create new "thoughts" via TheBrain API.
+ *
+ * Users supply identifiers for the brain and source thought along with the
+ * details of the new thought. Submission sends the data to the API route which
+ * proxies the request to TheBrain service.
+ *
+ * @returns {JSX.Element} Rendered page component.
+ */
 export default function Home() {
   const [brainId, setBrainId] = useState('');
   const [sourceThoughtId, setSourceThoughtId] = useState('');
@@ -11,6 +20,16 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState('');
   const csrfToken = process.env.NEXT_PUBLIC_CSRF_TOKEN;
 
+  /**
+   * Handle submission of the create thought form.
+   *
+   * Validates inputs for correct GUID formats, constructs the request payload,
+   * and posts the data to the {@code /api/createThought} endpoint. Success and
+   * error messages are surfaced to the user.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - Form submission event.
+   * @returns {Promise<void>} Resolves when submission processing is complete.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccessMessage('');
